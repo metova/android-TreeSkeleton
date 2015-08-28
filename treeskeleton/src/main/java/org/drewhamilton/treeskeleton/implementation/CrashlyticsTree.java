@@ -36,8 +36,8 @@ public class CrashlyticsTree extends TreeSkeleton {
     }
 
     @Override
-    protected void logGenericThrowable(Throwable throwable) {
-        logWarning(throwable);
+    protected void logException(Throwable throwable) {
+        Crashlytics.logException(throwable);
     }
 
     @Override
@@ -46,8 +46,8 @@ public class CrashlyticsTree extends TreeSkeleton {
     }
 
     @Override
-    protected void logException(Throwable throwable) {
-        Crashlytics.logException(throwable);
+    protected void logGenericThrowable(Throwable throwable) {
+        logWarning(throwable);
     }
     //endregion
 }

@@ -38,11 +38,11 @@ public abstract class TreeSkeleton extends Timber.Tree {
 
             if (throwable != null) {
                 switch (priority) {
-                    case Log.WARN:
-                        logWarning(throwable);
-                        break;
                     case Log.ERROR:
                         logException(throwable);
+                        break;
+                    case Log.WARN:
+                        logWarning(throwable);
                         break;
                     default:
                         logGenericThrowable(throwable);
@@ -65,10 +65,10 @@ public abstract class TreeSkeleton extends Timber.Tree {
     protected abstract void log(int priority, String tag, String message);
 
     /**
-     * Log a throwable with a priority other than Log.WARN or Log.ERROR to any service.
+     * Log a throwable with Log.ERROR priority to any service.
      * @param throwable The throwable to log.
      */
-    protected abstract void logGenericThrowable(Throwable throwable);
+    protected abstract void logException(Throwable throwable);
 
     /**
      * Log a throwable with Log.WARN priority to any service.
@@ -77,10 +77,10 @@ public abstract class TreeSkeleton extends Timber.Tree {
     protected abstract void logWarning(Throwable throwable);
 
     /**
-     * Log a throwable with Log.ERROR priority to any service.
+     * Log a throwable with a priority other than Log.WARN or Log.ERROR to any service.
      * @param throwable The throwable to log.
      */
-    protected abstract void logException(Throwable throwable);
+    protected abstract void logGenericThrowable(Throwable throwable);
     //endregion
 
     /**
