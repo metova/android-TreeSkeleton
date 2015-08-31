@@ -51,6 +51,11 @@ public abstract class TreeSkeleton extends Timber.Tree {
             }
         }
     }
+
+    @Override
+    protected boolean isLoggable(int priority) {
+        return priority >= mMinimumLogLevel;
+    }
     //endregion
 
     //region Abstract
@@ -92,6 +97,6 @@ public abstract class TreeSkeleton extends Timber.Tree {
      * @return True if this is allowed to be logged.
      */
     protected boolean isLoggable(String tag, int priority) {
-        return priority >= mMinimumLogLevel && Log.isLoggable(tag, priority);
+        return isLoggable(priority) && Log.isLoggable(tag, priority);
     }
 }
