@@ -5,7 +5,7 @@ import android.util.Log;
 
 import timber.log.Timber;
 
-public abstract class TreeSkeleton extends Timber.Tree {
+public abstract class TreeSkeleton extends Timber.DebugTree {
 
     /**
      * The default minimum log level is Log.VERBOSE.
@@ -33,70 +33,28 @@ public abstract class TreeSkeleton extends Timber.Tree {
     //region Overridden
     @Override
     protected void log(int priority, String tag, String message, @Nullable Throwable throwable) {
-        if (isLoggable(tag, priority)) {
-            log(priority, tag, message);
-
-            if (throwable != null) {
-                switch (priority) {
-                    case Log.ERROR:
-                        logException(throwable);
-                        break;
-                    case Log.WARN:
-                        logWarning(throwable);
-                        break;
-                    default:
-                        logGenericThrowable(throwable);
-                        break;
-                }
-            }
+        if (shouldUseDefaultLogMethod()) {
+            super.log(priority, tag, message, throwable);
         }
+
+        logToService(priority, tag, message, throwable);
     }
 
     @Override
-    protected boolean isLoggable(int priority) {
+    protected boolean isLoggable(String tag, int priority) {
         return priority >= mMinimumLogLevel;
     }
     //endregion
 
-    //region Abstract
-    /**
-     * Log a message to any service.
-     *
-     * @param priority The priority/type of this log message.
-     * @param tag Used to identify the source of a log message. It usually identifies
-     *        the class or activity where the log call occurs.
-     * @param message The message to log.
-     */
-    protected abstract void log(int priority, String tag, String message);
-
-    /**
-     * Log a throwable with Log.ERROR priority to any service.
-     * @param throwable The throwable to log.
-     */
-    protected abstract void logException(Throwable throwable);
-
-    /**
-     * Log a throwable with Log.WARN priority to any service.
-     * @param throwable The throwable to log.
-     */
-    protected abstract void logWarning(Throwable throwable);
-
-    /**
-     * Log a throwable with a priority other than Log.WARN or Log.ERROR to any service.
-     * @param throwable The throwable to log.
-     */
-    protected abstract void logGenericThrowable(Throwable throwable);
-    //endregion
-
-    /**
-     * Determines whether a log for the specified tag is loggable at the specified priority. Uses {@link #mMinimumLogLevel}
-     * and Log.isLoggable(String, int).
-     *
-     * @param tag The tag to check.
-     * @param priority The priority to check.
-     * @return True if this is allowed to be logged.
-     */
-    protected boolean isLoggable(String tag, int priority) {
-        return isLoggable(priority) && Log.isLoggable(tag, priority);
+    protected void logToService(int priority, String tag, String message, @Nullable Throwable throwable) {
+        // Override this to log to any custom service
     }
+
+    //region Abstract
+
+    /**
+     * @return Whether this Tree should use the default logging method provided by Timber in addition to calling logToService()
+     */
+    protected abstract boolean shouldUseDefaultLogMethod();
+    //endregion
 }
