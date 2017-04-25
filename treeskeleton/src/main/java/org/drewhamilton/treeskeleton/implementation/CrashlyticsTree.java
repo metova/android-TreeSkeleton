@@ -4,12 +4,13 @@ import com.crashlytics.android.Crashlytics;
 
 import org.drewhamilton.treeskeleton.TreeSkeleton;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 public class CrashlyticsTree extends TreeSkeleton {
 
     /**
-     * Default minimum log level is Log.INFO.
+     * The default minimum log level is Log.INFO.
      */
     public static final int MINIMUM_LOG_LEVEL_DEFAULT = Log.INFO;
 
@@ -31,23 +32,18 @@ public class CrashlyticsTree extends TreeSkeleton {
 
     //region Overridden
     @Override
-    protected void log(int priority, String tag, String message) {
+    protected void logToService(int priority, String tag, String message, @Nullable Throwable throwable) {
         Crashlytics.log(priority, tag, message);
+
+        if (throwable != null) {
+            Crashlytics.logException(throwable);
+        }
     }
 
     @Override
-    protected void logException(Throwable throwable) {
-        Crashlytics.logException(throwable);
-    }
-
-    @Override
-    protected void logWarning(Throwable throwable) {
-        logException(throwable);
-    }
-
-    @Override
-    protected void logGenericThrowable(Throwable throwable) {
-        logWarning(throwable);
+    protected boolean shouldUseDefaultLogMethod() {
+        // Crashlytics handles logging itself
+        return false;
     }
     //endregion
 }
