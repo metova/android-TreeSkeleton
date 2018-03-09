@@ -1,4 +1,4 @@
-# TreeSkeleton
+# Tree Skeleton
 
 ## Summary
 A simple class that extends `DebugTree` from Jake Wharton's Timber library, allowing users to easily send logs to third-party services.
