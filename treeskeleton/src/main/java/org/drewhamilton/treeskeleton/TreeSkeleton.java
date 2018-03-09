@@ -1,6 +1,5 @@
 package org.drewhamilton.treeskeleton;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import timber.log.Timber;
@@ -32,7 +31,7 @@ public abstract class TreeSkeleton extends Timber.DebugTree {
 
     //region Overridden
     @Override
-    protected void log(int priority, String tag, String message, @Nullable Throwable throwable) {
+    protected void log(int priority, String tag, String message, Throwable throwable) {
         if (shouldUseDefaultLogMethod()) {
             super.log(priority, tag, message, throwable);
         }
@@ -46,7 +45,7 @@ public abstract class TreeSkeleton extends Timber.DebugTree {
     }
     //endregion
 
-    protected void logToService(int priority, String tag, String message, @Nullable Throwable throwable) {
+    protected void logToService(int priority, String tag, String message, Throwable throwable) {
         // Override this to log to any custom service
     }
 

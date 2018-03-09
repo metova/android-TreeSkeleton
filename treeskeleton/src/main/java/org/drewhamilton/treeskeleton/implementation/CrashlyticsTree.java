@@ -1,11 +1,10 @@
 package org.drewhamilton.treeskeleton.implementation;
 
+import android.util.Log;
+
 import com.crashlytics.android.Crashlytics;
 
 import org.drewhamilton.treeskeleton.TreeSkeleton;
-
-import android.support.annotation.Nullable;
-import android.util.Log;
 
 public class CrashlyticsTree extends TreeSkeleton {
 
@@ -32,7 +31,7 @@ public class CrashlyticsTree extends TreeSkeleton {
 
     //region Overridden
     @Override
-    protected void logToService(int priority, String tag, String message, @Nullable Throwable throwable) {
+    protected void logToService(int priority, String tag, String message, Throwable throwable) {
         Crashlytics.log(priority, tag, message);
 
         if (throwable != null) {
