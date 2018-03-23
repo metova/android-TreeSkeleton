@@ -40,7 +40,7 @@ public class CrashlyticsTree extends TreeSkeleton {
     }
 
     @Override
-    protected boolean shouldUseDefaultLogMethod() {
+    protected boolean shouldAlsoUseDefaultLogMethod() {
         // Crashlytics handles logging itself
         return false;
     }

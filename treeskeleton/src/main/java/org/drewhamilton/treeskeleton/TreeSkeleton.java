@@ -6,9 +6,6 @@ import timber.log.Timber;
 
 public abstract class TreeSkeleton extends Timber.DebugTree {
 
-    /**
-     * The default minimum log level is Log.VERBOSE.
-     */
     public static final int MINIMUM_LOG_LEVEL_DEFAULT = Log.VERBOSE;
 
     private int mMinimumLogLevel;
@@ -32,7 +29,7 @@ public abstract class TreeSkeleton extends Timber.DebugTree {
     //region Overridden
     @Override
     protected void log(int priority, String tag, String message, Throwable throwable) {
-        if (shouldUseDefaultLogMethod()) {
+        if (shouldAlsoUseDefaultLogMethod()) {
             super.log(priority, tag, message, throwable);
         }
 
@@ -54,6 +51,6 @@ public abstract class TreeSkeleton extends Timber.DebugTree {
     /**
      * @return Whether this Tree should use the default logging method provided by Timber in addition to calling logToService()
      */
-    protected abstract boolean shouldUseDefaultLogMethod();
+    protected abstract boolean shouldAlsoUseDefaultLogMethod();
     //endregion
 }
